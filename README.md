@@ -82,8 +82,8 @@ SemiBin generate_cannot_links \
 ```bash
 SemiBin train \
 -i assembly_contig/R1.contigs.fa \
---data advanced_single_sample_output/train.csv \
---data-split advanced_single_sample_output/train_split.csv \
+--data advanced_single_sample_output/data.csv \
+--data-split advanced_single_sample_output/data_split.csv \
 -c advanced_single_sample_output/cannot/cannot.txt \
 -o advanced_single_sample_output --mode single
 ```
@@ -172,8 +172,8 @@ SemiBin generate_cannot_links \
 ```bash
 SemiBin train \
 -i assembly_contig/coassembly.contigs.fa \
---data advanced_coassembly_sample_output/train.csv \
---data-split advanced_coassembly_sample_output/train_split.csv \
+--data advanced_coassembly_sample_output/data.csv \
+--data-split advanced_coassembly_sample_output/data_split.csv \
 -c advanced_coassembly_sample_output/cannot/cannot.txt \
 -o advanced_coassembly_sample_output --mode single
 ```
@@ -210,7 +210,7 @@ SemiBin concatenate_fasta -i assembly_contig*/R*.fa -o combined_output
 Mapping
 ```bash
 bowtie2-build \
--f combined_output/concatenated.fa combined_output/concatenated.f5
+-f combined_output/concatenated.fa combined_output/concatenated.fa
 
 for sample in {1..5}; \
 do \
@@ -266,8 +266,8 @@ for i in {1..5}; \
 do \
 SemiBin train \
 -i assembly_contig"$i"/R"$i".contigs.fa \
---data advanced_multi_output/samples/R"$i"/train.csv \
---data-split advanced_multi_output/samples/R"$i"/train_split.csv \
+--data advanced_multi_output/samples/R"$i"/data.csv \
+--data-split advanced_multi_output/samples/R"$i"/data_split.csv \
 -c  advanced_multi_output/samples/R"$i"/cannot/cannot.txt \
 -o advanced_multi_output/samples/R"$i" \
 --mode single; \
@@ -280,9 +280,9 @@ for i in {1..5}; \
 do \
 SemiBin bin \
 -i assembly_contig"$i"/R"$i".contigs.fa \
---model \ advanced_multi_output/samples/R"$sample"/model.h5 \
---data  \ advanced_multi_output/samples/R"$sample"/data.csv \
--o advanced_multi_output/samples/R"$sample"; \
+--model advanced_multi_output/samples/R"$i"/model.h5 \
+--data  advanced_multi_output/samples/R"$i"/data.csv \
+-o advanced_multi_output/samples/R"$i"; \
 done
 ```
 
